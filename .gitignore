@@ -1,0 +1,6 @@
+*
+*.c
+!geom1.c
+!.gitignore
+!.clang-format
+!Makefile
