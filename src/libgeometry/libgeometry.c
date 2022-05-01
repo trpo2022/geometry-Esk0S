@@ -7,31 +7,30 @@ double char_to_double()
     int integer;
     char intch;
     int dec_length;
-    while ((last_getch = getchar()) == ' ') continue;
+    while ((last_getch = getchar()) == ' ')
+        continue;
 
-        integer = (last_getch - '0') * 10;
-        while ((intch = getchar()) != '.') {
-            integer = (intch - '0' + integer) * 10;
-        }
-        integer /= 10;
-        
+    integer = (last_getch - '0') * 10;
+    while ((intch = getchar()) != '.') {
+        integer = (intch - '0' + integer) * 10;
+    }
+    integer /= 10;
 
-        float dec = 0;
-        char decch;
+    float dec = 0;
+    char decch;
 
-        dec_length = 0;
-        while ( ((decch = getchar()) != ' ') && (decch != ',') ) {
-            
-            dec = (decch - '0' + dec) * 10;
-            dec_length += 1;
-        }
-        dec /= 10;
+    dec_length = 0;
+    while (((decch = getchar()) != ' ') && (decch != ',')) {
+        dec = (decch - '0' + dec) * 10;
+        dec_length += 1;
+    }
+    dec /= 10;
 
-        dec /= pow(10, dec_length);
+    dec /= pow(10, dec_length);
 
-        double_from_char = integer + dec;
+    double_from_char = integer + dec;
 
-        return double_from_char;
+    return double_from_char;
 }
 
 double char_to_double_last()
@@ -41,44 +40,41 @@ double char_to_double_last()
     int integer;
     char intch;
     int dec_length;
-    while ((last_getch = getchar()) == ' ') continue;
+    while ((last_getch = getchar()) == ' ')
+        continue;
 
-        integer = (last_getch - '0') * 10;
-        while ((intch = getchar()) != '.') {
-            integer = (intch - '0' + integer) * 10;
+    integer = (last_getch - '0') * 10;
+    while ((intch = getchar()) != '.') {
+        integer = (intch - '0' + integer) * 10;
+    }
+    integer /= 10;
+
+    float dec = 0;
+    char decch;
+
+    dec_length = 0;
+
+    while (((decch = getchar()) != ')') && (decch != ' ')) {
+        dec = (decch - '0' + dec) * 10;
+        dec_length += 1;
+    }
+    dec /= 10;
+
+    if (decch != ')') {
+        while ((last_getch = getchar()) == ' ')
+            continue;
+
+        if (last_getch != ')') {
+            printf("Expected ')'\n");
+            return 0;
         }
-        integer /= 10;
-        
+    }
 
-        float dec = 0;
-        char decch;
+    dec /= pow(10, dec_length);
 
-        dec_length = 0;
+    double_from_char = integer + dec;
 
-
-        while ( ((decch = getchar()) != ')') && (decch != ' ') ) {
-            
-            dec = (decch - '0' + dec) * 10;
-            dec_length += 1;
-        }
-        dec /= 10;
-
-        if (decch != ')') {
-            while ((last_getch = getchar()) == ' ') continue;
-            
-            if (last_getch != ')')
-            {
-                
-                printf("Expected ')'\n");
-                return 0;
-            }
-        }
-
-        dec /= pow(10, dec_length);
-
-        double_from_char = integer + dec;
-
-        return double_from_char;
+    return double_from_char;
 }
 
 int intersection_circles(circle cir1, circle cir2)
@@ -92,18 +88,19 @@ int intersection_circles(circle cir1, circle cir2)
     x_difference = abs(cir1.x1 - cir2.x1);
     y_difference = abs(cir1.y1 - cir2.y1);
 
-    r_vec = sqrt( SQR(x_difference) + SQR(y_difference) );
+    r_vec = sqrt(SQR(x_difference) + SQR(y_difference));
 
     r_summ = cir1.radius + cir2.radius;
 
     if (r_vec <= r_summ) {
         flag = 1;
-    } else flag = 0;
+    } else
+        flag = 0;
 
     return flag;
 }
 
-int triangle_processing(triangle *tri, double *perimeter, double *area)
+int triangle_processing(triangle* tri, double* perimeter, double* area)
 {
     tri->x1 = char_to_double();
     tri->y1 = char_to_double();
@@ -123,12 +120,12 @@ int triangle_processing(triangle *tri, double *perimeter, double *area)
     double c = sqrt(SQR(tri->x4 - tri->x3) + SQR(tri->y4 - tri->y3));
     *perimeter = a + b + c;
 
-    double p = (*perimeter)/2;
-    *area = sqrt( p*(p - a)*(p - b)*(p - c) );
+    double p = (*perimeter) / 2;
+    *area = sqrt(p * (p - a) * (p - b) * (p - c));
     return 1;
 }
 
-int circle_processing(circle *cir, double *perimeter, double *area)
+int circle_processing(circle* cir, double* perimeter, double* area)
 {
     cir->x1 = char_to_double();
     cir->y1 = char_to_double();

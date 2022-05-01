@@ -1,6 +1,6 @@
 #pragma once
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #define SQR(x) (x) * (x)
 
@@ -17,7 +17,7 @@ typedef struct {
     double y2;
     double x3;
     double y3;
-    double x4; 
+    double x4;
     double y4;
 } triangle;
 
