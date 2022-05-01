@@ -1,3 +1,4 @@
-*.c
-!geometry.c
-!libgeometry.c
+*.a
+*.d
+*.o
+bin/geometry
