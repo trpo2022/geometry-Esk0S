@@ -102,3 +102,44 @@ int intersection_circles(circle cir1, circle cir2)
 
     return flag;
 }
+
+int triangle_processing(triangle *tri, double *perimeter, double *area)
+{
+    tri->x1 = char_to_double();
+    tri->y1 = char_to_double();
+    tri->x2 = char_to_double();
+    tri->y2 = char_to_double();
+    tri->x3 = char_to_double();
+    tri->y3 = char_to_double();
+    tri->x4 = char_to_double();
+    tri->y4 = char_to_double_last();
+
+    if (tri->x1 != tri->x4 || tri->y1 != tri->y4) {
+        printf("First and last coordinates must be the same\n");
+        return 0;
+    }
+    double a = sqrt(SQR(tri->x2 - tri->x1) + SQR(tri->y2 - tri->y1));
+    double b = sqrt(SQR(tri->x3 - tri->x2) + SQR(tri->y3 - tri->y2));
+    double c = sqrt(SQR(tri->x4 - tri->x3) + SQR(tri->y4 - tri->y3));
+    *perimeter = a + b + c;
+
+    double p = (*perimeter)/2;
+    *area = sqrt( p*(p - a)*(p - b)*(p - c) );
+    return 1;
+}
+
+int circle_processing(circle *cir, double *perimeter, double *area)
+{
+    cir->x1 = char_to_double();
+    cir->y1 = char_to_double();
+
+    cir->radius = char_to_double_last();
+    if (cir->radius == 0) {
+        printf("Radius cannot be zero\n");
+        return 0;
+    }
+    *perimeter = 2 * M_PI * cir->radius;
+
+    *area = M_PI * SQR(cir->radius);
+    return 1;
+}

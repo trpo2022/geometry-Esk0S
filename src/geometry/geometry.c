@@ -2,14 +2,17 @@
 
 int main()
 {
-    int i, is_circle1 = 0, is_circle2 = 0;
+    int i, is_circle1 = 0, is_circle2 = 0, is_triangle1 = 0, is_triangle2 = 0;
     circle cir1;
     circle cir2;
+    triangle tri1;
+    triangle tri2;
     char figure1[50];
     char figure2[50];
 
     char circle1[7] = {"circle"};
-    
+    char triangle1[9] = {"triangle"};
+
     printf("Enter 2 figures\n");
 
     i = 0;
@@ -28,25 +31,35 @@ int main()
         }
     }
 
-    if (is_circle1 == 1) {
-        
-        cir1.x1 = char_to_double();
-        cir1.y1 = char_to_double();
-
-        cir1.radius = char_to_double_last();
-        if (cir1.radius == 0) {
-            return 0;
+    if ((figure1[0] == triangle1[0]) || (figure1[0] == triangle1[0] - 32)) {
+        for (i = 1; figure1[i] != '('; i++) {
+            if ((figure1[i] == triangle1[i]) || (figure1[i] == triangle1[i] - 32)) {
+                is_triangle1 = 1;
+            } else {
+                is_triangle1 = 0;
+                break;
+            }
         }
+    }
 
-        double perimeter1;
-        perimeter1 = 2 * M_PI * cir1.radius;
-        printf("Perimeter: %lf\n", perimeter1);
-
-        double area1;
-        area1 = M_PI * SQR(cir1.radius);
-        printf("Area: %lf\n", area1);
+    if (is_circle1 == 1) {
+        double perimeter;
+        double area;
+        if (circle_processing(&cir1, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+        } else return 0;
+    } else 
+        if (is_triangle1 == 1) {
+            double perimeter;
+            double area;
+            if (triangle_processing(&tri1, &perimeter, &area)) {
+                printf("Perimeter: %lf\n", perimeter);
+                printf("Area: %lf\n", area);
+            } else return 0;
     } else {
         printf("Unexpected figure\n");
+        return 0;
     } 
 
     getchar();
@@ -66,37 +79,45 @@ int main()
             }
         }
     }
+
+    if ((figure2[0] == triangle1[0]) || (figure2[0] == triangle1[0] - 32)) {
+        for (i = 1; figure2[i] != '('; i++) {
+            if ((figure2[i] == triangle1[i]) || (figure2[i] == triangle1[i] - 32)) {
+                is_triangle2 = 1;
+            } else {
+                is_triangle2 = 0;
+                break;
+            }
+        }
+    }
     
     if (is_circle2 == 1) {
-        
-        cir2.x1 = char_to_double();
-        cir2.y1 = char_to_double();
-
-        cir2.radius = char_to_double_last();
-        if (cir2.radius == 0) {
-            return 0;
-        }
-
-        double perimeter2;
-        perimeter2 = 2 * M_PI * cir2.radius;
-        printf("Perimeter: %lf\n", perimeter2);
-
-        double area2;
-        area2 = M_PI * SQR(cir2.radius);
-        printf("Area: %lf\n", area2);
+        double perimeter;
+        double area;
+        if (circle_processing(&cir2, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+        } else return 0;
+    } else 
+        if (is_triangle2 == 1) {
+            double perimeter;
+            double area;
+            if (triangle_processing(&tri2, &perimeter, &area)) {
+                printf("Perimeter: %lf\n", perimeter);
+                printf("Area: %lf\n", area);
+            } else return 0;
     } else {
         printf("Unexpected figure\n");
-        
-    } 
-
-    int flag;
-    flag = intersection_circles(cir1, cir2);
-
-    if (flag == 1) {
-        printf("Пересекаются\n");
-    } else {
-        printf("Не пересекаются\n");
     }
+    
+    if (is_circle1 == 1 && is_circle2 == 1) {
+        int flag = intersection_circles(cir1, cir2);
 
+        if (flag == 1) {
+            printf("Intersect\n");
+        } else {
+            printf("Do not intersect\n");
+        }
+    }
     return 0;
 }
