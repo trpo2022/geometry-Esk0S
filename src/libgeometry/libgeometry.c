@@ -140,3 +140,60 @@ int circle_processing(circle* cir, double* perimeter, double* area)
     *area = M_PI * SQR(cir->radius);
     return 1;
 }
+
+double s_n(Point a[], int n)
+{
+    double sum = 0;
+    for (int i = 0; i < n; ++i) {
+        double det = a[i % n].x * a[(i + 1) % n].y - a[(i + 1) % n].x * a[i % n].y;
+        sum += det;
+    }
+    return fabs(sum / 2);
+}
+
+int intersection_triangle(triangle tri1, triangle tri2)
+{
+    const double EPS = 1e-10;
+
+    Point a[3], b[3];
+
+    a[0].x = tri1.x1;
+    a[0].y = tri1.y1;
+    a[1].x = tri1.x2;
+    a[1].y = tri1.y2;
+    a[2].x = tri1.x3;
+    a[2].y = tri1.y3;
+
+    b[0].x = tri2.x1;
+    b[0].y = tri2.y1;
+    b[1].x = tri2.x2;
+    b[1].y = tri2.y2;
+    b[2].x = tri2.x3;
+    b[2].y = tri2.y3;
+
+    double sa = s_n(a, 3);
+
+    int flag = 0;
+    for (int i = 0; i < 3; ++i) {
+        double sum = 0;
+        for (int j = 0; j < 3; ++j) {
+            Point c[3];
+            for (int k = 0; k < 3; ++k)
+                if (k == j)
+                    c[k] = b[i];
+                else
+                    c[k] = a[k];
+
+            double sc = s_n(c, 3);
+
+            sum += sc;
+        }
+
+        if (fabs(sa - sum) < EPS) {
+            flag = 1;
+            break;
+        }
+    }
+
+    return flag;
+}
