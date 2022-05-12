@@ -145,7 +145,8 @@ double s_n(Point a[], int n)
 {
     double sum = 0;
     for (int i = 0; i < n; ++i) {
-        double det = a[i % n].x * a[(i + 1) % n].y - a[(i + 1) % n].x * a[i % n].y;
+        double det
+                = a[i % n].x * a[(i + 1) % n].y - a[(i + 1) % n].x * a[i % n].y;
         sum += det;
     }
     return fabs(sum / 2);
@@ -196,4 +197,52 @@ int intersection_triangle(triangle tri1, triangle tri2)
     }
 
     return flag;
+}
+
+int intersection_triangle_circle(circle cir, triangle tri)
+{
+    const double eps = 1e-10;
+    double x0 = cir.x1;
+    double y0 = cir.y1;
+    double r = cir.radius;
+    double x1, x2, y1, y2;
+    int track = 0;
+    Point p[4];
+
+    p[0].x = tri.x1;
+    p[2].x = tri.x3;
+    p[0].y = tri.y1;
+    p[2].y = tri.y3;
+    p[1].x = tri.x2;
+    p[3].x = tri.x4;
+    p[1].y = tri.y2;
+    p[3].y = tri.y4;
+
+    for (int i = 0; i < 3; i++) {
+        x1 = p[i].x;
+        y1 = p[i].y;
+        x2 = p[i + 1].x;
+        y2 = p[i + 1].y;
+
+        double dx01 = x1 - x0, dy01 = y1 - y0, dx12 = x2 - x1, dy12 = y2 - y1;
+        double a = SQR(dx12) + SQR(dy12);
+        if (fabs(a) < eps) {
+            printf("Координаты начала и конца совпадают\n");
+            return 0;
+        }
+        double k = dx01 * dx12 + dy01 * dy12;
+        double c = SQR(dx01) + SQR(dy01) - SQR(r);
+        double d1 = SQR(k) - a * c;
+        if (d1 >= 0 && fabs(d1) < eps) {
+            double t = -k / a;
+            track++;
+            if (t > 0 - eps && t < 1 + eps) {
+                track++;
+            }
+        } else if (d1 >= 0)
+            track++;
+    }
+    if (track > 0)
+        return 1;
+    return 0;
 }

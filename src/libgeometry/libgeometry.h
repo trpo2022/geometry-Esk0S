@@ -33,3 +33,4 @@ int triangle_processing(triangle*, double*, double*);
 int circle_processing(circle*, double*, double*);
 int intersection_triangle(triangle tri1, triangle tri2);
 double s_n(Point a[], int n);
+int intersection_triangle_circle(circle cir, triangle tri);

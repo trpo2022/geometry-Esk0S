@@ -134,5 +134,25 @@ int main()
         }
     }
 
+    if (is_circle1 == 1 && is_triangle2 == 1) {
+        int flag = intersection_triangle_circle(cir1, tri2);
+
+        if (flag == 1) {
+            printf("Intersect\n");
+        } else {
+            printf("Do not intersect\n");
+        }
+    }
+
+    if (is_circle2 == 1 && is_triangle1 == 1) {
+        int flag = intersection_triangle_circle(cir2, tri1);
+
+        if (flag == 1) {
+            printf("Intersect\n");
+        } else {
+            printf("Do not intersect\n");
+        }
+    }
+
     return 0;
 }
