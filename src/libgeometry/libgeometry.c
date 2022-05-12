@@ -140,3 +140,109 @@ int circle_processing(circle* cir, double* perimeter, double* area)
     *area = M_PI * SQR(cir->radius);
     return 1;
 }
+
+double s_n(Point a[], int n)
+{
+    double sum = 0;
+    for (int i = 0; i < n; ++i) {
+        double det
+                = a[i % n].x * a[(i + 1) % n].y - a[(i + 1) % n].x * a[i % n].y;
+        sum += det;
+    }
+    return fabs(sum / 2);
+}
+
+int intersection_triangle(triangle tri1, triangle tri2)
+{
+    const double EPS = 1e-10;
+
+    Point a[3], b[3];
+
+    a[0].x = tri1.x1;
+    a[0].y = tri1.y1;
+    a[1].x = tri1.x2;
+    a[1].y = tri1.y2;
+    a[2].x = tri1.x3;
+    a[2].y = tri1.y3;
+
+    b[0].x = tri2.x1;
+    b[0].y = tri2.y1;
+    b[1].x = tri2.x2;
+    b[1].y = tri2.y2;
+    b[2].x = tri2.x3;
+    b[2].y = tri2.y3;
+
+    double sa = s_n(a, 3);
+
+    int flag = 0;
+    for (int i = 0; i < 3; ++i) {
+        double sum = 0;
+        for (int j = 0; j < 3; ++j) {
+            Point c[3];
+            for (int k = 0; k < 3; ++k)
+                if (k == j)
+                    c[k] = b[i];
+                else
+                    c[k] = a[k];
+
+            double sc = s_n(c, 3);
+
+            sum += sc;
+        }
+
+        if (fabs(sa - sum) < EPS) {
+            flag = 1;
+            break;
+        }
+    }
+
+    return flag;
+}
+
+int intersection_triangle_circle(circle cir, triangle tri)
+{
+    const double eps = 1e-10;
+    double x0 = cir.x1;
+    double y0 = cir.y1;
+    double r = cir.radius;
+    double x1, x2, y1, y2;
+    int track = 0;
+    Point p[4];
+
+    p[0].x = tri.x1;
+    p[2].x = tri.x3;
+    p[0].y = tri.y1;
+    p[2].y = tri.y3;
+    p[1].x = tri.x2;
+    p[3].x = tri.x4;
+    p[1].y = tri.y2;
+    p[3].y = tri.y4;
+
+    for (int i = 0; i < 3; i++) {
+        x1 = p[i].x;
+        y1 = p[i].y;
+        x2 = p[i + 1].x;
+        y2 = p[i + 1].y;
+
+        double dx01 = x1 - x0, dy01 = y1 - y0, dx12 = x2 - x1, dy12 = y2 - y1;
+        double a = SQR(dx12) + SQR(dy12);
+        if (fabs(a) < eps) {
+            printf("Координаты начала и конца совпадают\n");
+            return 0;
+        }
+        double k = dx01 * dx12 + dy01 * dy12;
+        double c = SQR(dx01) + SQR(dy01) - SQR(r);
+        double d1 = SQR(k) - a * c;
+        if (d1 >= 0 && fabs(d1) < eps) {
+            double t = -k / a;
+            track++;
+            if (t > 0 - eps && t < 1 + eps) {
+                track++;
+            }
+        } else if (d1 >= 0)
+            track++;
+    }
+    if (track > 0)
+        return 1;
+    return 0;
+}
