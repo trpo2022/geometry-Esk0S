@@ -1,4 +1,4 @@
-#include <libgeometry/libgeometry.h>
+#include <libgeometry.h>
 
 int main()
 {

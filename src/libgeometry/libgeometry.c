@@ -1,4 +1,4 @@
-#include <libgeometry/libgeometry.h>
+#include <libgeometry.h>
 
 double char_to_double()
 {
@@ -85,8 +85,8 @@ int intersection_circles(circle cir1, circle cir2)
     double r_vec;
     double r_summ;
 
-    x_difference = abs(cir1.x1 - cir2.x1);
-    y_difference = abs(cir1.y1 - cir2.y1);
+    x_difference = fabs(cir1.x1 - cir2.x1);
+    y_difference = fabs(cir1.y1 - cir2.y1);
 
     r_vec = sqrt(SQR(x_difference) + SQR(y_difference));
 
@@ -141,22 +141,30 @@ int circle_processing(circle* cir, double* perimeter, double* area)
     return 1;
 }
 
-double s_n(Point a[], int n)
+int cross(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
 {
-    double sum = 0;
-    for (int i = 0; i < n; ++i) {
-        double det
-                = a[i % n].x * a[(i + 1) % n].y - a[(i + 1) % n].x * a[i % n].y;
-        sum += det;
+    double denominator=(y4-y3)*(x1-x2)-(x4-x3)*(y1-y2);
+    int ff = 0;
+    if (denominator == 0) {
+        if ( (x1*y2-x2*y1)*(x4-x3) - (x3*y4-x4*y3)*(x2-x1) == 0 && (x1*y2-x2*y1)*(y4-y3) - (x3*y4-x4*y3)*(y2-y1) == 0)
+            ff = 1;
+        else 
+            ff = 0;
     }
-    return fabs(sum / 2);
+    else{
+        double numerator_a=(x4-x2)*(y4-y3)-(x4-x3)*(y4-y2);
+        double numerator_b=(x1-x2)*(y4-y2)-(x4-x2)*(y1-y2);
+        double Ua=numerator_a/denominator;
+        double Ub=numerator_b/denominator;
+
+        ff = (Ua >=0 && Ua <=1 && Ub >=0 && Ub <=1 ? 1 : 0);
+    }
+    return ff;
 }
 
 int intersection_triangle(triangle tri1, triangle tri2)
 {
-    const double EPS = 1e-10;
-
-    Point a[3], b[3];
+    Point a[4], b[4];
 
     a[0].x = tri1.x1;
     a[0].y = tri1.y1;
@@ -164,6 +172,8 @@ int intersection_triangle(triangle tri1, triangle tri2)
     a[1].y = tri1.y2;
     a[2].x = tri1.x3;
     a[2].y = tri1.y3;
+    a[3].x = tri1.x4;
+    a[3].y = tri1.y4;
 
     b[0].x = tri2.x1;
     b[0].y = tri2.y1;
@@ -171,32 +181,19 @@ int intersection_triangle(triangle tri1, triangle tri2)
     b[1].y = tri2.y2;
     b[2].x = tri2.x3;
     b[2].y = tri2.y3;
+    b[3].x = tri2.x4;
+    b[3].y = tri2.y4;
 
-    double sa = s_n(a, 3);
-
-    int flag = 0;
-    for (int i = 0; i < 3; ++i) {
-        double sum = 0;
-        for (int j = 0; j < 3; ++j) {
-            Point c[3];
-            for (int k = 0; k < 3; ++k)
-                if (k == j)
-                    c[k] = b[i];
-                else
-                    c[k] = a[k];
-
-            double sc = s_n(c, 3);
-
-            sum += sc;
-        }
-
-        if (fabs(sa - sum) < EPS) {
-            flag = 1;
-            break;
+    int ff = 0;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            ff = cross(a[i].x, a[i].y, a[i + 1].x, a[i + 1]. y,   b[j].x, b[j].y, b[j + 1].x, b[j + 1]. y);
         }
     }
-
-    return flag;
+    if (ff) {
+        return 1;
+    }
+    return 0;
 }
 
 int intersection_triangle_circle(circle cir, triangle tri)
