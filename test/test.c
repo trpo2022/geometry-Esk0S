@@ -1,6 +1,6 @@
-#include <stdlib.h>
-#include <libgeometry.h>
 #include <ctest.h>
+#include <libgeometry.h>
+#include <stdlib.h>
 
 CTEST(figures_suit, triangles_intersection)
 {
