@@ -34,3 +34,7 @@ int circle_processing(circle*, double*, double*);
 int intersection_triangle(triangle tri1, triangle tri2);
 int intersection_triangle_circle(circle cir, triangle tri);
 int cross(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4);
+double perimeter_circle(circle *cir);
+double area_circle(circle *cir);
+double perimeter_triangle(double a, double b, double c);
+double area_triangle(double p, double a, double b, double c);

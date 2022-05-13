@@ -100,6 +100,20 @@ int intersection_circles(circle cir1, circle cir2)
     return flag;
 }
 
+double perimeter_triangle(double a, double b, double c)
+{
+    double perimeter = a + b + c;
+
+    return perimeter;
+}
+
+double area_triangle(double p, double a, double b, double c)
+{
+    double area = sqrt(p * (p - a) * (p - b) * (p - c));
+
+    return area;
+}
+
 int triangle_processing(triangle* tri, double* perimeter, double* area)
 {
     tri->x1 = char_to_double();
@@ -118,11 +132,27 @@ int triangle_processing(triangle* tri, double* perimeter, double* area)
     double a = sqrt(SQR(tri->x2 - tri->x1) + SQR(tri->y2 - tri->y1));
     double b = sqrt(SQR(tri->x3 - tri->x2) + SQR(tri->y3 - tri->y2));
     double c = sqrt(SQR(tri->x4 - tri->x3) + SQR(tri->y4 - tri->y3));
-    *perimeter = a + b + c;
+    // *perimeter = a + b + c;
+    *perimeter = perimeter_triangle(a, b, c);
 
     double p = (*perimeter) / 2;
-    *area = sqrt(p * (p - a) * (p - b) * (p - c));
+    // *area = sqrt(p * (p - a) * (p - b) * (p - c));
+    *area = area_triangle(p, a, b, c);
     return 1;
+}
+
+double perimeter_circle(circle *cir)
+{
+    double perimeter = 2 * M_PI * cir->radius;
+
+    return perimeter;
+}
+
+double area_circle(circle *cir)
+{
+    double area = M_PI * SQR(cir->radius);
+
+    return area;
 }
 
 int circle_processing(circle* cir, double* perimeter, double* area)
@@ -135,9 +165,9 @@ int circle_processing(circle* cir, double* perimeter, double* area)
         printf("Radius cannot be zero\n");
         return 0;
     }
-    *perimeter = 2 * M_PI * cir->radius;
+    *perimeter = perimeter_circle(cir);
 
-    *area = M_PI * SQR(cir->radius);
+    *area = area_circle(cir);
     return 1;
 }
 
