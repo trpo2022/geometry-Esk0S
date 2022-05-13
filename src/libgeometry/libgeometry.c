@@ -141,14 +141,14 @@ int triangle_processing(triangle* tri, double* perimeter, double* area)
     return 1;
 }
 
-double perimeter_circle(circle *cir)
+double perimeter_circle(circle* cir)
 {
     double perimeter = 2 * M_PI * cir->radius;
 
     return perimeter;
 }
 
-double area_circle(circle *cir)
+double area_circle(circle* cir)
 {
     double area = M_PI * SQR(cir->radius);
 
@@ -171,23 +171,33 @@ int circle_processing(circle* cir, double* perimeter, double* area)
     return 1;
 }
 
-int cross(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
+int cross(
+        double x1,
+        double y1,
+        double x2,
+        double y2,
+        double x3,
+        double y3,
+        double x4,
+        double y4)
 {
-    double denominator=(y4-y3)*(x1-x2)-(x4-x3)*(y1-y2);
+    double denominator = (y4 - y3) * (x1 - x2) - (x4 - x3) * (y1 - y2);
     int ff = 0;
     if (denominator == 0) {
-        if ( (x1*y2-x2*y1)*(x4-x3) - (x3*y4-x4*y3)*(x2-x1) == 0 && (x1*y2-x2*y1)*(y4-y3) - (x3*y4-x4*y3)*(y2-y1) == 0)
+        if ((x1 * y2 - x2 * y1) * (x4 - x3) - (x3 * y4 - x4 * y3) * (x2 - x1)
+                    == 0
+            && (x1 * y2 - x2 * y1) * (y4 - y3) - (x3 * y4 - x4 * y3) * (y2 - y1)
+                    == 0)
             ff = 1;
-        else 
+        else
             ff = 0;
-    }
-    else{
-        double numerator_a=(x4-x2)*(y4-y3)-(x4-x3)*(y4-y2);
-        double numerator_b=(x1-x2)*(y4-y2)-(x4-x2)*(y1-y2);
-        double Ua=numerator_a/denominator;
-        double Ub=numerator_b/denominator;
+    } else {
+        double numerator_a = (x4 - x2) * (y4 - y3) - (x4 - x3) * (y4 - y2);
+        double numerator_b = (x1 - x2) * (y4 - y2) - (x4 - x2) * (y1 - y2);
+        double Ua = numerator_a / denominator;
+        double Ub = numerator_b / denominator;
 
-        ff = (Ua >=0 && Ua <=1 && Ub >=0 && Ub <=1 ? 1 : 0);
+        ff = (Ua >= 0 && Ua <= 1 && Ub >= 0 && Ub <= 1 ? 1 : 0);
     }
     return ff;
 }
@@ -217,7 +227,15 @@ int intersection_triangle(triangle tri1, triangle tri2)
     int ff = 0;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            ff = cross(a[i].x, a[i].y, a[i + 1].x, a[i + 1]. y,   b[j].x, b[j].y, b[j + 1].x, b[j + 1]. y);
+            ff
+                    = cross(a[i].x,
+                            a[i].y,
+                            a[i + 1].x,
+                            a[i + 1].y,
+                            b[j].x,
+                            b[j].y,
+                            b[j + 1].x,
+                            b[j + 1].y);
         }
     }
     if (ff) {
