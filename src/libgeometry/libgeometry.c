@@ -343,7 +343,7 @@ int namecheck2(int is_circle2, int is_triangle2, circle cir2, triangle tri2)
     return 0;
 }
 
-int fig1_cir_check(char *figure1, char *circle1)
+int fig1_cir_check(char* figure1, char* circle1)
 {
     int is_circle1;
     if ((figure1[0] == circle1[0]) || (figure1[0] == circle1[0] - 32)) {
@@ -359,7 +359,7 @@ int fig1_cir_check(char *figure1, char *circle1)
     return is_circle1;
 }
 
-int fig1_tri_check(char *figure1, char *triangle1)
+int fig1_tri_check(char* figure1, char* triangle1)
 {
     int is_triangle1;
     if ((figure1[0] == triangle1[0]) || (figure1[0] == triangle1[0] - 32)) {
@@ -376,7 +376,7 @@ int fig1_tri_check(char *figure1, char *triangle1)
     return is_triangle1;
 }
 
-int fig2_cir_check(char *figure2, char *circle1)
+int fig2_cir_check(char* figure2, char* circle1)
 {
     int is_circle2;
     if ((figure2[0] == circle1[0]) || (figure2[0] == circle1[0] - 32)) {
@@ -392,7 +392,7 @@ int fig2_cir_check(char *figure2, char *circle1)
     return is_circle2;
 }
 
-int fig2_tri_check(char *figure2, char *triangle1)
+int fig2_tri_check(char* figure2, char* triangle1)
 {
     int is_triangle2;
     if ((figure2[0] == triangle1[0]) || (figure2[0] == triangle1[0] - 32)) {

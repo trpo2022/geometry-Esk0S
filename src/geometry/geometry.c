@@ -22,7 +22,8 @@ int main()
 
     // if ((figure1[0] == circle1[0]) || (figure1[0] == circle1[0] - 32)) {
     //     for (i = 1; figure1[i] != '('; i++) {
-    //         if ((figure1[i] == circle1[i]) || (figure1[i] == circle1[i] - 32)) {
+    //         if ((figure1[i] == circle1[i]) || (figure1[i] == circle1[i] -
+    //         32)) {
     //             is_circle1 = 1;
     //         } else {
     //             is_circle1 = 0;
@@ -78,7 +79,8 @@ int main()
 
     // if ((figure2[0] == circle1[0]) || (figure2[0] == circle1[0] - 32)) {
     //     for (i = 1; figure2[i] != '('; i++) {
-    //         if ((figure2[i] == circle1[i]) || (figure2[i] == circle1[i] - 32)) {
+    //         if ((figure2[i] == circle1[i]) || (figure2[i] == circle1[i] -
+    //         32)) {
     //             is_circle2 = 1;
     //         } else {
     //             is_circle2 = 0;
@@ -100,7 +102,6 @@ int main()
     //     }
     // }
     is_triangle2 = fig2_tri_check(figure2, triangle1);
-
 
     // if (is_circle2 == 1) {
     //     double perimeter;
