@@ -136,3 +136,23 @@ CTEST(figure_suit, area_tri)
     double result = area_triangle(p, a, b, c);
     ASSERT_EQUAL(expected, result);
 }
+
+CTEST(figure_suit, name_check)
+{
+    char figure1[50] = "circle(";
+    char figure2[50] = "triangle(";
+    char circle1[7] = {"circle"};
+    char triangle1[9] = {"triangle"};
+    int fig = 0;
+
+    if (fig1_cir_check(figure1, circle1)) {
+        fig = 1;
+    } else if (fig1_tri_check(figure1, triangle1)) 
+            fig = 1;
+    else if (fig2_cir_check(figure2, circle1))
+            fig = 1;
+    else if (fig2_tri_check(figure2, triangle1))
+            fig = 1;
+    
+    ASSERT_EQUAL(1, fig);     
+}
