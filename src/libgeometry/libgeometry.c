@@ -271,6 +271,7 @@ int intersection_triangle_circle(circle cir, triangle tri)
 
         double dx01 = x1 - x0, dy01 = y1 - y0, dx12 = x2 - x1, dy12 = y2 - y1;
         double a = SQR(dx12) + SQR(dy12);
+        printf("%lf\n", a);
         if (fabs(a) < eps) {
             printf("Координаты начала и конца совпадают\n");
             return 0;
@@ -290,4 +291,120 @@ int intersection_triangle_circle(circle cir, triangle tri)
     if (track > 0)
         return 1;
     return 0;
+}
+
+int namecheck1(int is_circle1, int is_triangle1, circle cir1, triangle tri1)
+{
+    if (is_circle1 == 1) {
+        double perimeter;
+        double area;
+        if (circle_processing(&cir1, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+            return 1;
+        }
+        return 0;
+    } else if (is_triangle1 == 1) {
+        double perimeter;
+        double area;
+        if (triangle_processing(&tri1, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+            return 1;
+        }
+        return 0;
+    }
+    printf("Unexpected figure\n");
+    return 0;
+}
+
+int namecheck2(int is_circle2, int is_triangle2, circle cir2, triangle tri2)
+{
+    if (is_circle2 == 1) {
+        double perimeter;
+        double area;
+        if (circle_processing(&cir2, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+            return 1;
+        }
+        return 0;
+    } else if (is_triangle2 == 1) {
+        double perimeter;
+        double area;
+        if (triangle_processing(&tri2, &perimeter, &area)) {
+            printf("Perimeter: %lf\n", perimeter);
+            printf("Area: %lf\n", area);
+            return 1;
+        }
+        return 0;
+    }
+    printf("Unexpected figure\n");
+    return 0;
+}
+
+int fig1_cir_check(char *figure1, char *circle1)
+{
+    int is_circle1;
+    if ((figure1[0] == circle1[0]) || (figure1[0] == circle1[0] - 32)) {
+        for (int i = 1; figure1[i] != '('; i++) { // int добавил
+            if ((figure1[i] == circle1[i]) || (figure1[i] == circle1[i] - 32)) {
+                is_circle1 = 1;
+            } else {
+                is_circle1 = 0;
+                break;
+            }
+        }
+    }
+    return is_circle1;
+}
+
+int fig1_tri_check(char *figure1, char *triangle1)
+{
+    int is_triangle1;
+    if ((figure1[0] == triangle1[0]) || (figure1[0] == triangle1[0] - 32)) {
+        for (int i = 1; figure1[i] != '('; i++) {
+            if ((figure1[i] == triangle1[i])
+                || (figure1[i] == triangle1[i] - 32)) {
+                is_triangle1 = 1;
+            } else {
+                is_triangle1 = 0;
+                break;
+            }
+        }
+    }
+    return is_triangle1;
+}
+
+int fig2_cir_check(char *figure2, char *circle1)
+{
+    int is_circle2;
+    if ((figure2[0] == circle1[0]) || (figure2[0] == circle1[0] - 32)) {
+        for (int i = 1; figure2[i] != '('; i++) {
+            if ((figure2[i] == circle1[i]) || (figure2[i] == circle1[i] - 32)) {
+                is_circle2 = 1;
+            } else {
+                is_circle2 = 0;
+                break;
+            }
+        }
+    }
+    return is_circle2;
+}
+
+int fig2_tri_check(char *figure2, char *triangle1)
+{
+    int is_triangle2;
+    if ((figure2[0] == triangle1[0]) || (figure2[0] == triangle1[0] - 32)) {
+        for (int i = 1; figure2[i] != '('; i++) {
+            if ((figure2[i] == triangle1[i])
+                || (figure2[i] == triangle1[i] - 32)) {
+                is_triangle2 = 1;
+            } else {
+                is_triangle2 = 0;
+                break;
+            }
+        }
+    }
+    return is_triangle2;
 }
